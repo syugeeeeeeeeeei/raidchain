@@ -87,6 +87,11 @@ scaffold-metachain:
 		echo "✅  metachain source code scaffolded in 'chain/metachain'"; \
 	fi
 
+delete-chain:
+	@echo "🔥  Deleting scaffolded chain source directories..."
+	@rm -rf chain/datachain chain/metachain
+	@echo "✅  Scaffolded chain source directories deleted."
+
 # =============================================================================
 # Utility and Debugging Commands
 # =============================================================================

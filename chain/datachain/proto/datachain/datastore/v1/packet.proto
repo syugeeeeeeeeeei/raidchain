@@ -4,8 +4,6 @@ package datachain.datastore.v1;
 
 option go_package = "datachain/x/datastore/types";
 
-import "gogoproto/gogo.proto";
-
 // DatastorePacketData defines the Datastore data packet.
 message DatastorePacketData {
   oneof packet {

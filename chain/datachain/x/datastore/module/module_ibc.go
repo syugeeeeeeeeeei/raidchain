@@ -126,14 +126,12 @@ func (im IBCModule) OnRecvPacket(
 		if err != nil {
 			ack = channeltypes.NewErrorAcknowledgement(err)
 		} else {
-			// ★★★ ここからが修正箇所です ★★★
-			// Encode packet acknowledgment using the binary codec
-			packetAckBytes, err := im.cdc.Marshal(packetAck)
+			// Encode packet acknowledgment
+			packetAckBytes, err := im.cdc.MarshalJSON(&packetAck)
 			if err != nil {
 				return channeltypes.NewErrorAcknowledgement(errorsmod.Wrap(sdkerrors.ErrJSONMarshal, err.Error()))
 			}
 			ack = channeltypes.NewResultAcknowledgement(packetAckBytes)
-			// ★★★ 修正ここまで ★★★
 		}
 
 		sdkCtx := sdk.UnwrapSDKContext(ctx)
@@ -145,11 +143,13 @@ func (im IBCModule) OnRecvPacket(
 			),
 		)
 
+		// this line is used by starport scaffolding # ibc/packet/module/recv
 	default:
 		err := fmt.Errorf("unrecognized %s packet type: %T", types.ModuleName, packet)
 		return channeltypes.NewErrorAcknowledgement(err)
 	}
 
+	// NOTE: acknowledgement will be written synchronously during IBC handler execution.
 	return ack
 }
 

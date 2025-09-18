@@ -19,7 +19,6 @@ message NoData {}
 message MetadataPacketData {
   string url = 1;
   repeated string addresses = 2;
-  string creator = 3;
 }
 
 // MetadataPacketAck defines a struct for the packet acknowledgment
